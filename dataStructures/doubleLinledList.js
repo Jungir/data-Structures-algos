@@ -5,8 +5,6 @@ class Node{
         this.next = null;
         this.prev = null;
     }
-    
-
 }
 
 //Double linked list
@@ -75,6 +73,36 @@ class DoublyLinkedList{
         this.length++;
         return this;
     }
+    get(idx){
+        if(idx >= this.length || idx < 0) return null;
+        if(idx === 0) return this.head;
+        if(idx === this.length - 1) return this.tail;
+        let counter, current;
+        if(idx <= this.length / 2){
+            counter = 0;
+            current = this.head;
+            while(counter !== idx){
+                current = current.next;
+                counter++;
+            }
+  
+        }else{
+            counter = this.length - 1;
+            current = this.tail;
+            while(counter !== idx){
+                current = current.prev;
+                counter--;
+            }
+           
+        }
+        return current;
+
+    }
+    set(idx, value){
+        let foundNode = this.get(idx);
+        if(foundNode !== null) return !!(foundNode.val = value);
+        return false;
+    }
 }
 
 const list = new DoublyLinkedList();
@@ -82,4 +110,9 @@ const list = new DoublyLinkedList();
 list.push(1);
 list.push(2);
 list.push(3);
-console.log(list)
+list.push(4);
+list.push(5);
+list.push(6);
+console.log(list.get(1));
+console.log(list.set(1, 'new Value'));
+console.log(list.get(1));
