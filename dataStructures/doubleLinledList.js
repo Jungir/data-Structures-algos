@@ -107,16 +107,34 @@ class DoublyLinkedList{
         if(idx < 0 ||idx > this.length) return false;
         if(idx === 0) return !!this.unshift(vallue);
         if(idx === this.length) return !!this.push(value);
+
         let beforeNode = this.get(idx - 1);
         let newNode = new Node(value); 
         let afterNode = beforeNode.next;
-        beforeNode.next = newNode;
-        newNode.prev = beforeNode;
-        newNode.next = afterNode;
-        afterNode.prev = newNode;
+
+        beforeNode.next = newNode; newNode.prev = beforeNode;
+
+        newNode.next = afterNode; afterNode.prev = newNode;
+
         this.length++;
         return true;
 
+    }
+    remove(idx){
+        if(idx < 0 || idx >= this.length) return undefined;
+        if(idx === 0 ) return this.shift();
+        if(idx === this.length - 1) return this.pop();
+        let removedNode = this.get(idx);
+        let beforeNode = removedNode.prev;
+        let afterNode = removedNode.next;
+        beforeNode.next = afterNode;
+        afterNode.prev = beforeNode;
+
+        //reset the next & prev for deleted item
+        removedNode.next = null;
+        removedNode.prev = null;
+        this.length --;
+        return removedNode;
     }
 }
 
